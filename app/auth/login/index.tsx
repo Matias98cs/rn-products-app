@@ -10,15 +10,19 @@ import { ThemedText } from "@/presentation/theme/components/ThemedText";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
 import ThemedButton from "@/presentation/theme/components/ThemedButton";
 import ThemedLink from "@/presentation/theme/components/ThemedLink";
+import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
 
 const LoginScreen = () => {
   const { height } = useWindowDimensions();
+
+  const backgroundColor = useThemeColor({}, 'background')
 
   return (
     <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
       <ScrollView
         style={{
           paddingHorizontal: 40,
+          backgroundColor: backgroundColor
         }}
       >
         <View

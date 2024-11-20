@@ -3,9 +3,12 @@ import React, { useEffect } from "react";
 import { ThemedText } from "@/presentation/theme/components/ThemedText";
 import { useAuthStore } from "@/presentation/auth/store/useAuthStore";
 import { Redirect, Stack } from "expo-router";
+import { useThemeColor } from "@/presentation/theme/hooks/useThemeColor";
 
 const CheckAuthenticationLayout = () => {
   const { status, checkStatus } = useAuthStore();
+
+  const backgroundColor = useThemeColor({}, "background");
   useEffect(() => {
     // checkStatus();
   }, []);
@@ -25,14 +28,23 @@ const CheckAuthenticationLayout = () => {
   }
 
   if (status === "unauthenticated") {
-
     //guardar ruta del usuario
-    
+
     return <Redirect href="/auth/login" />;
   }
 
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: backgroundColor,
+        },
+        contentStyle: {
+          backgroundColor: backgroundColor,
+        },
+      }}
+    >
       <Stack.Screen
         name="(home)/index"
         options={{
