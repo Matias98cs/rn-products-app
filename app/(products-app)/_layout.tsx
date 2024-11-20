@@ -10,7 +10,7 @@ const CheckAuthenticationLayout = () => {
 
   const backgroundColor = useThemeColor({}, "background");
   useEffect(() => {
-    // checkStatus();
+    checkStatus();
   }, []);
 
   if (status === "checking") {

@@ -1,5 +1,6 @@
 import { authCheckStatus, authLogin } from "@/core/auth/actions/auth-actions";
 import { User } from "@/core/auth/interfaces/user";
+import { SecureStorageAdapter } from "@/helpers/adapters/secure-storage.adapter";
 import { create } from "zustand";
 
 
@@ -13,7 +14,7 @@ export interface AuthState {
     login: (email: string, password: string) => Promise<boolean>;
     checkStatus: () => Promise<void>;
     logout: () => Promise<void>;
-    changeStatus: (token?: string, user?: User) => boolean;
+    changeStatus: (token?: string, user?: User) => Promise<boolean>;
 }
 
 
@@ -24,14 +25,17 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     user: undefined,
 
     //Acciones
-    changeStatus: (token?: string, user?: User) => {
+    changeStatus: async (token?: string, user?: User) => {
 
         if (!token || !user) {
             set({ status: 'unauthenticated', token: undefined, user: undefined });
+            await SecureStorageAdapter.deleteItem('token')
             return false
         }
 
         set({ status: 'authenticated', token: token, user: user });
+
+        await SecureStorageAdapter.setItem('token', token);
 
         return true
     },
@@ -40,16 +44,12 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
         return get().changeStatus(resp?.token, resp?.user)
     },
     checkStatus: async () => {
-
-        if (get().user) {
-            return;
-        }
-        
         const resp = await authCheckStatus();
         get().changeStatus(resp?.token, resp?.user)
     },
     logout: async () => {
         // borrar el token del secure storage
+        await SecureStorageAdapter.deleteItem('token')
 
         set({ status: 'unauthenticated', token: undefined, user: undefined });
 
