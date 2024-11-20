@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
   ScrollView,
@@ -30,8 +31,13 @@ const LoginScreen = () => {
     const { email, password } = form;
 
     if (email.length === 0 || password.length === 0) {
+      Alert.alert(
+        "Email y contraseña",
+        "Los campos email y contraseña deben estar completos"
+      );
       return;
     }
+
     setIsPosting(true);
     const wasSuccessful = await login(email, password);
     setIsPosting(false);
@@ -45,6 +51,21 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      {isPosting && (
+        <ActivityIndicator
+          size={30}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+      )}
+
       <ScrollView
         style={{
           paddingHorizontal: 40,
@@ -106,7 +127,10 @@ const LoginScreen = () => {
           >
             <ThemedText>No tienes cuenta ?</ThemedText>
 
-            <ThemedLink href="/auth/register" style={{ marginHorizontal: 5 }}>
+            <ThemedLink
+              href="/auth/register"
+              style={{ marginHorizontal: 5, fontSize: 16 }}
+            >
               Crear cuenta
             </ThemedLink>
           </View>
