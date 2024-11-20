@@ -19,7 +19,7 @@ export interface AuthState {
 
 export const useAuthStore = create<AuthState>()((set, get) => ({
     //Propiedades
-    status: 'checking',
+    status: 'unauthenticated',
     token: undefined,
     user: undefined,
 
@@ -27,7 +27,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     changeStatus: (token?: string, user?: User) => {
 
         if (!token || !user) {
-            set({ status: 'authenticated', token: undefined, user: undefined });
+            set({ status: 'unauthenticated', token: undefined, user: undefined });
             return false
         }
 

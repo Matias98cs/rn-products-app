@@ -45,8 +45,7 @@ export const authLogin = async (email: string, password: string) => {
 
 export const authCheckStatus = async () => {
     try {
-        const { data } = await prodcutsApi.get<AuthResponse>('/auth/check-status')
-
+        const { data } = await prodcutsApi.get<AuthResponse>('/auth/check-status')        
         return resturnUserToken(data)
     } catch (error) {
         return null
