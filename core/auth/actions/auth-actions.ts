@@ -37,7 +37,6 @@ export const authLogin = async (email: string, password: string) => {
 
     } catch (error) {
         console.log(error)
-        // throw new Error('Error al iniciar sesión')
         return null
     }
 }
@@ -48,6 +47,24 @@ export const authCheckStatus = async () => {
         const { data } = await prodcutsApi.get<AuthResponse>('/auth/check-status')        
         return resturnUserToken(data)
     } catch (error) {
+        return null
+    }
+}
+
+export const authRegister = async (email: string, password: string, fullName: string) => {
+    email = email.toLowerCase()
+
+    try {
+        const { data } = await prodcutsApi.post<AuthResponse>('/auth/register', {
+            email,
+            password,
+            fullName,
+        });
+
+        return resturnUserToken(data)
+
+    } catch (error) {
+        console.log(error)
         return null
     }
 }

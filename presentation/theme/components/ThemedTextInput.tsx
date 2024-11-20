@@ -35,7 +35,7 @@ const ThemedTextInput = ({ icon, ...rest }: Props) => {
           name={icon}
           size={24}
           color={textColor}
-          style={{ marginRight: 10 }}
+          style={{ marginHorizontal: 5 }}
         />
       )}
       <TextInput
