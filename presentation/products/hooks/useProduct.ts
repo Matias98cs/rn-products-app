@@ -1,3 +1,4 @@
+import { updateCreateProduct } from "@/core/produdcts/actions/create-update-product.actions";
 import { getProductById } from "@/core/produdcts/actions/get-product-by-id.actions"
 import { Product } from "@/core/produdcts/interfaces/producto.interface";
 import { useMutation, useQuery } from "@tanstack/react-query"
@@ -13,10 +14,7 @@ const useProduct = (productId: string) => {
     });
 
     const productMutation = useMutation({
-        mutationFn: async (data: Product) => {
-            console.log({ data })
-            return data;
-        },
+        mutationFn: async (data: Product) => updateCreateProduct(data),
         onSuccess: (data: Product) => {
             Alert.alert("Producto guaradado", "El producto se guardo correctamente")
         }
