@@ -13,6 +13,7 @@ import { ThemedView } from "@/presentation/theme/components/ThemedView";
 import ThemedTextInput from "@/presentation/theme/components/ThemedTextInput";
 import useProduct from "@/presentation/products/hooks/useProduct";
 import ProductImages from "@/presentation/products/components/ProductImages";
+import ThemedButtonGroup from "@/presentation/theme/components/ThemedButtonGroup";
 
 const ProductScreen = () => {
   const { id } = useLocalSearchParams();
@@ -77,6 +78,18 @@ const ProductScreen = () => {
           <ThemedTextInput placeholder="Precio" style={{ flex: 1 }} />
 
           <ThemedTextInput placeholder="Inventario" style={{ flex: 1 }} />
+        </ThemedView>
+
+        <ThemedView
+          style={{
+            marginHorizontal: 10,
+          }}
+        >
+          <ThemedButtonGroup
+            options={["XS", "S", "M", "L", "XL", "XXL", "XXXL"]}
+            selectedOptions={product.sizes}
+            onSelect={(options) => console.log({ options })}
+          />
         </ThemedView>
       </ScrollView>
     </KeyboardAvoidingView>
