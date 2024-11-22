@@ -5,6 +5,7 @@ import {
   TextInputProps,
   StyleSheet,
   TextInput,
+  ViewStyle,
 } from "react-native";
 import { useThemeColor } from "../hooks/useThemeColor";
 import { useRef, useState } from "react";
@@ -13,7 +14,7 @@ interface Props extends TextInputProps {
   icon?: keyof typeof Ionicons.glyphMap;
 }
 
-const ThemedTextInput = ({ icon, ...rest }: Props) => {
+const ThemedTextInput = ({ icon, style, ...rest }: Props) => {
   const [isActive, setIsActive] = useState(false);
   const inputRef = useRef<TextInput>(null);
 
@@ -22,12 +23,13 @@ const ThemedTextInput = ({ icon, ...rest }: Props) => {
 
   return (
     <View
-      style={{
-        ...styles.border,
-
-        // cambiar si tiene el fono en el input
-        borderColor: isActive ? primaryColor : "#cccccc",
-      }}
+      style={[
+        {
+          ...styles.border,
+          borderColor: isActive ? primaryColor : "#cccccc",
+        },
+        StyleSheet.flatten(style) as ViewStyle,
+      ]}
       onTouchStart={() => inputRef.current?.focus()}
     >
       {icon && (
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
   border: {
     borderWidth: 1,
     borderRadius: 5,
-    padding: 5,
+    padding: 8,
     marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
