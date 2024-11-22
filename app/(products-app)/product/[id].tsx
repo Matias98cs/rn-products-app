@@ -20,7 +20,7 @@ import { Size } from "@/core/produdcts/interfaces/producto.interface";
 
 const ProductScreen = () => {
   const { id } = useLocalSearchParams();
-  const { productQuery } = useProduct(`${id}`);
+  const { productQuery, productMutation } = useProduct(`${id}`);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const ProductScreen = () => {
   return (
     <Formik
       initialValues={product}
-      onSubmit={(producLike) => console.log(producLike)}
+      onSubmit={(producLike) => productMutation.mutate(producLike)}
     >
       {({ handleChange, setFieldValue, handleSubmit, values }) => (
         <KeyboardAvoidingView
@@ -140,10 +140,7 @@ const ProductScreen = () => {
             <View
               style={{ marginHorizontal: 10, marginBottom: 50, marginTop: 20 }}
             >
-              <ThemedButton
-                icon="save-sharp"
-                onPress={() => console.log("Guardando...")}
-              >
+              <ThemedButton icon="save-sharp" onPress={() => handleSubmit()}>
                 Guardar
               </ThemedButton>
             </View>
